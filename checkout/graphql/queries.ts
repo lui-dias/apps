@@ -1,4 +1,4 @@
-import { gql } from "../../../utils/graphql.ts";
+import { gql } from "../../utils/graphql.ts";
 
 const Checkout = gql`
 fragment Checkout on Checkout {
@@ -821,11 +821,23 @@ export const Shop = {
 };
 
 export const CustomerCreate = {
-  query: gql`mutation($input: CustomerCreateInput) {
+  query: gql`mutation customerCreate($input: CustomerCreateInput) {
     customerCreate(input: $input) {
       customerId
       customerName
       customerType
+    }
+  }`,
+};
+
+export const CustomerAuthenticatedLogin = {
+  query:
+    gql`mutation customerAuthenticatedLogin($input: String!, $pass: String!) {
+    customerAuthenticatedLogin(input:{input: $input, password: $pass}) {
+      isMaster
+      token
+      type
+      validUntil
     }
   }`,
 };
