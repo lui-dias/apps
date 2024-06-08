@@ -1,4 +1,4 @@
-import { gql } from "../../../utils/graphql.ts";
+import { gql } from '../../../utils/graphql.ts'
 
 const Checkout = gql`
 fragment Checkout on Checkout {
@@ -22,7 +22,7 @@ fragment Checkout on Checkout {
     url
   }
 }
-`;
+`
 
 const Product = gql`
 fragment Product on Product {
@@ -127,7 +127,7 @@ fragment Product on Product {
   }
   # parallelOptions
 }
-`;
+`
 
 const ProductVariant = gql`
 fragment ProductVariant on ProductVariant {
@@ -217,7 +217,7 @@ fragment ProductVariant on ProductVariant {
           stamp
           title
         }
-}`;
+}`
 
 const SingleProductPart = gql`
 fragment SingleProductPart on SingleProduct {
@@ -387,7 +387,7 @@ fragment SingleProductPart on SingleProduct {
   }
  
 }
-`;
+`
 
 const SingleProduct = gql`
 fragment SingleProduct on SingleProduct {
@@ -397,7 +397,7 @@ fragment SingleProduct on SingleProduct {
   } 
 }
 
-`;
+`
 
 const RestockAlertNode = gql`
   fragment RestockAlertNode on RestockAlertNode {
@@ -406,7 +406,7 @@ const RestockAlertNode = gql`
     productVariantId,
     requestDate
   }
-`;
+`
 
 const NewsletterNode = gql`
   fragment NewsletterNode on NewsletterNode {
@@ -415,7 +415,7 @@ const NewsletterNode = gql`
     createDate,
     updateDate
   }
-`;
+`
 
 const ShippingQuote = gql`
   fragment ShippingQuote on ShippingQuote {
@@ -438,7 +438,7 @@ const ShippingQuote = gql`
       value
     }
   }
-`;
+`
 
 export const Customer = gql`
   fragment Customer on Customer {
@@ -455,41 +455,40 @@ export const Customer = gql`
       name
     }
   }
-`;
+`
 
 export const WishlistReducedProduct = gql`
   fragment WishlistReducedProduct on Product {
     productId
     productName
   }
-`;
+`
 
 export const GetProduct = {
-  fragments: [SingleProductPart, SingleProduct, ProductVariant],
-  query: gql`query GetProduct($productId: Long!) { 
+    fragments: [SingleProductPart, SingleProduct, ProductVariant],
+    query: gql`query GetProduct($productId: Long!) { 
     product(productId: $productId) { 
       ...SingleProduct 
      
     } 
   }`,
-};
+}
 
 export const GetCart = {
-  fragments: [Checkout],
-  query: gql`query GetCart($checkoutId: String!) { 
+    fragments: [Checkout],
+    query: gql`query GetCart($checkoutId: String!) { 
     checkout(checkoutId: $checkoutId) { ...Checkout } 
   }`,
-};
+}
 
 export const CreateCart = {
-  fragments: [Checkout],
-  query: gql`mutation CreateCart { checkout: createCheckout { ...Checkout } }`,
-};
+    fragments: [Checkout],
+    query: gql`mutation CreateCart { checkout: createCheckout { ...Checkout } }`,
+}
 
 export const GetProducts = {
-  fragments: [Product],
-  query:
-    gql`query GetProducts($filters: ProductExplicitFiltersInput!, $first: Int!, $sortDirection: SortDirection!, $sortKey: ProductSortKeys, $after: String) { products(filters: $filters, first: $first, sortDirection: $sortDirection, sortKey: $sortKey, after: $after) { 
+    fragments: [Product],
+    query: gql`query GetProducts($filters: ProductExplicitFiltersInput!, $first: Int!, $sortDirection: SortDirection!, $sortKey: ProductSortKeys, $after: String) { products(filters: $filters, first: $first, sortDirection: $sortDirection, sortKey: $sortKey, after: $after) { 
       nodes { ...Product } 
       totalCount
       pageInfo{
@@ -499,12 +498,11 @@ export const GetProducts = {
         startCursor
       }
     }}`,
-};
+}
 
 export const Search = {
-  fragments: [Product],
-  query:
-    gql`query Search($operation: Operation!, $query: String, $onlyMainVariant: Boolean, $minimumPrice: Decimal, $maximumPrice: Decimal , $limit: Int, $offset: Int,  $sortDirection: SortDirection, $sortKey: ProductSearchSortKeys, $filters: [ProductFilterInput]) { 
+    fragments: [Product],
+    query: gql`query Search($operation: Operation!, $query: String, $onlyMainVariant: Boolean, $minimumPrice: Decimal, $maximumPrice: Decimal , $limit: Int, $offset: Int,  $sortDirection: SortDirection, $sortKey: ProductSearchSortKeys, $filters: [ProductFilterInput]) { 
        result: search(query: $query, operation: $operation) { 
           aggregations {
             maximumPrice
@@ -553,75 +551,72 @@ export const Search = {
           
         } 
       }`,
-};
+}
 
 export const AddCoupon = {
-  fragments: [Checkout],
-  query: gql`mutation AddCoupon($checkoutId: Uuid!, $coupon: String!) {
+    fragments: [Checkout],
+    query: gql`mutation AddCoupon($checkoutId: Uuid!, $coupon: String!) {
     checkout: checkoutAddCoupon(
       checkoutId: $checkoutId
       coupon: $coupon
     ) { ...Checkout }
   }`,
-};
+}
 
 export const AddItemToCart = {
-  fragments: [Checkout],
-  query: gql`mutation AddItemToCart($input: CheckoutProductInput!) { 
+    fragments: [Checkout],
+    query: gql`mutation AddItemToCart($input: CheckoutProductInput!) { 
     checkout: checkoutAddProduct(input: $input) { ...Checkout }
   }`,
-};
+}
 
 export const RemoveCoupon = {
-  fragments: [Checkout],
-  query: gql`mutation RemoveCoupon($checkoutId: Uuid!) {
+    fragments: [Checkout],
+    query: gql`mutation RemoveCoupon($checkoutId: Uuid!) {
     checkout: checkoutRemoveCoupon(checkoutId: $checkoutId) {
       ...Checkout
     }
   }`,
-};
+}
 
 export const RemoveItemFromCart = {
-  fragments: [Checkout],
-  query: gql`mutation RemoveItemFromCart($input: CheckoutProductInput!) { 
+    fragments: [Checkout],
+    query: gql`mutation RemoveItemFromCart($input: CheckoutProductInput!) { 
       checkout: checkoutRemoveProduct(input: $input) { ...Checkout }
     }`,
-};
+}
 
 export const ProductRestockAlert = {
-  fragments: [RestockAlertNode],
-  query: gql`mutation ProductRestockAlert($input: RestockAlertInput!) { 
+    fragments: [RestockAlertNode],
+    query: gql`mutation ProductRestockAlert($input: RestockAlertInput!) { 
       productRestockAlert(input: $input) { ...RestockAlertNode }
     }`,
-};
+}
 
 export const WishlistAddProduct = {
-  fragments: [Product],
-  query:
-    gql`mutation WishlistAddProduct($customerAccessToken: String!, $productId: Long!) { 
+    fragments: [Product],
+    query: gql`mutation WishlistAddProduct($customerAccessToken: String!, $productId: Long!) { 
       wishlistAddProduct(customerAccessToken: $customerAccessToken, productId: $productId) { ...Product }
     }`,
-};
+}
 
 export const WishlistRemoveProduct = {
-  fragments: [Product],
-  query:
-    gql`mutation WishlistRemoveProduct($customerAccessToken: String!, $productId: Long!) { 
+    fragments: [Product],
+    query: gql`mutation WishlistRemoveProduct($customerAccessToken: String!, $productId: Long!) { 
       wishlistRemoveProduct(customerAccessToken: $customerAccessToken, productId: $productId) { ...Product }
     }`,
-};
+}
 
 export const CreateNewsletterRegister = {
-  fragments: [NewsletterNode],
-  query: gql`mutation CreateNewsletterRegister($input: NewsletterInput!) { 
+    fragments: [NewsletterNode],
+    query: gql`mutation CreateNewsletterRegister($input: NewsletterInput!) { 
       createNewsletterRegister(input: $input) { ...NewsletterNode }
     }`,
-};
+}
 
 export const Autocomplete = {
-  fragments: [Product],
-  query:
-    gql`query Autocomplete($limit: Int, $query: String, $partnerAccessToken: String) { 
+    fragments: [Product],
+    query: gql`query Autocomplete($limit: Int, $query: String, $partnerAccessToken: String) { 
       autocomplete(limit: $limit, query: $query , partnerAccessToken: $partnerAccessToken ) { 
         suggestions, 
         products {
@@ -629,11 +624,11 @@ export const Autocomplete = {
         }
       }
     }`,
-};
+}
 
 export const ProductRecommendations = {
-  fragments: [Product],
-  query: gql`query ProductRecommendations( 
+    fragments: [Product],
+    query: gql`query ProductRecommendations( 
     $productId: Long!,
     $algorithm: ProductRecommendationAlgorithm!,
     $partnerAccessToken: String,
@@ -643,30 +638,29 @@ export const ProductRecommendations = {
           ...Product
       }
     }`,
-};
+}
 
 export const ShippingQuotes = {
-  fragments: [ShippingQuote],
-  query:
-    gql`query ShippingQuotes($cep: CEP,$checkoutId: Uuid, $productVariantId: Long,$quantity: Int = 1, $useSelectedAddress: Boolean){
+    fragments: [ShippingQuote],
+    query: gql`query ShippingQuotes($cep: CEP,$checkoutId: Uuid, $productVariantId: Long,$quantity: Int = 1, $useSelectedAddress: Boolean){
     shippingQuotes(cep: $cep,checkoutId: $checkoutId,productVariantId: $productVariantId,quantity: $quantity, useSelectedAddress: $useSelectedAddress){
       ...ShippingQuote
     }
   }`,
-};
+}
 
 export const GetUser = {
-  fragments: [Customer],
-  query: gql`query getUser($customerAccessToken: String){
+    fragments: [Customer],
+    query: gql`query getUser($customerAccessToken: String){
       customer(customerAccessToken: $customerAccessToken) {
         ...Customer
     }
   }`,
-};
+}
 
 export const GetWishlist = {
-  fragments: [WishlistReducedProduct],
-  query: gql`query getWislist($customerAccessToken: String){
+    fragments: [WishlistReducedProduct],
+    query: gql`query getWislist($customerAccessToken: String){
       customer(customerAccessToken: $customerAccessToken) {
         wishlist {
           products {
@@ -675,10 +669,10 @@ export const GetWishlist = {
         }
     }
   }`,
-};
+}
 
 export const GetURL = {
-  query: gql`query getURL($url: String!)  {
+    query: gql`query getURL($url: String!)  {
     uri(url: $url) {
       hotsiteSubtype
       kind
@@ -689,11 +683,10 @@ export const GetURL = {
       redirectUrl
     }
   }`,
-};
+}
 
 export const CreateProductReview = {
-  query:
-    gql`mutation createProductReview ($email: String!, $name: String!, $productVariantId: Long!, $rating: Int!, $review: String!){
+    query: gql`mutation createProductReview ($email: String!, $name: String!, $productVariantId: Long!, $rating: Int!, $review: String!){
     createProductReview(input: {email: $email, name: $name, productVariantId: $productVariantId, rating: $rating, review: $review}) {
       customer
       email
@@ -701,19 +694,18 @@ export const CreateProductReview = {
       review
       reviewDate
   }}`,
-};
+}
 
 export const SendGenericForm = {
-  query:
-    gql`mutation sendGenericForm ($body: Any, $file: Upload, $recaptchaToken: String){
+    query: gql`mutation sendGenericForm ($body: Any, $file: Upload, $recaptchaToken: String){
     sendGenericForm(body: $body, file: $file, recaptchaToken: $recaptchaToken) {
       isSuccess
   }}`,
-};
+}
 
 export const Hotsite = {
-  fragments: [Product],
-  query: gql`query Hotsite($url: String,
+    fragments: [Product],
+    query: gql`query Hotsite($url: String,
     $filters: [ProductFilterInput],
     $limit: Int,
     $maximumPrice: Decimal,
@@ -784,10 +776,10 @@ export const Hotsite = {
     }
   }
   `,
-};
+}
 
 export const productOptions = {
-  query: gql`query productOptions ($productId: Long!){
+    query: gql`query productOptions ($productId: Long!){
     productOptions(productId: $productId) {
       attributes {
         attributeId
@@ -805,10 +797,10 @@ export const productOptions = {
       id
     }
   }`,
-};
+}
 
 export const Shop = {
-  query: gql`query shop{
+    query: gql`query shop{
     shop {
       checkoutUrl
       mainUrl
@@ -818,14 +810,129 @@ export const Shop = {
       name
     }
   }`,
-};
+}
 
 export const CustomerCreate = {
-  query: gql`mutation($input: CustomerCreateInput) {
+    query: gql`mutation customerCreate($input: CustomerCreateInput) {
     customerCreate(input: $input) {
       customerId
       customerName
       customerType
     }
   }`,
-};
+}
+
+export const CustomerAuthenticatedLogin = {
+    query: gql`mutation customerAuthenticatedLogin($input: String!, $pass: String!) {
+    customerAuthenticatedLogin(input:{input: $input, password: $pass}) {
+      isMaster
+      token
+      type
+      validUntil
+    }
+  }`,
+}
+
+export const CustomerAddressCreate = {
+    query: gql`mutation customerAddressCreate(
+     $customerAccessToken: String!,
+     $address: CreateCustomerAddressInput!,
+    ) {
+      customerAddressCreate(
+        customerAccessToken: $customerAccessToken,
+        address: $address,
+      ) {
+        addressDetails
+        addressNumber
+        cep
+        city
+        country
+        email
+        id
+        name
+        neighborhood
+        phone
+        state
+        street
+        referencePoint
+      }
+    }`,
+}
+
+export const CustomerAddressRemove = {
+    query: gql`mutation customerAddressRemove($customerAccessToken: String!, $id: ID!) {
+      customerAddressRemove(customerAccessToken: $customerAccessToken, id: $id) {
+        isSuccess
+      }
+    }`,
+}
+
+export const CustomerAddressUpdate = {
+    query: gql`mutation customerAddressUpdate(
+     $id: ID!,
+     $customerAccessToken: String!,
+     $address: UpdateCustomerAddressInput!,
+    ) {
+      customerAddressUpdate(
+        customerAccessToken: $customerAccessToken,
+        address: $address,
+        id: $id
+      ) {
+        addressDetails
+        addressNumber
+        cep
+        city
+        country
+        email
+        id
+        name
+        neighborhood
+        phone
+        state
+        street
+        referencePoint
+      }
+    }`,
+}
+
+export const GetUserAddresses = {
+    fragments: [Customer],
+    query: gql`query GetUserAddresses($customerAccessToken: String) {
+    customer(customerAccessToken: $customerAccessToken) {
+      ...Customer,
+      addresses {
+        address
+        address2
+        addressDetails
+        addressNumber
+        cep
+        city
+        country
+        email
+        id
+        name
+        neighborhood
+        phone
+        referencePoint
+        state
+        street
+      }
+    }
+  }`,
+}
+
+export const CreateCheckout = {
+    query: gql`mutation createCheckout($products: [CheckoutProductItemInput]!) {
+      createCheckout(products: $products) {
+        checkoutId
+      }
+    }`,
+}
+
+export const CheckoutCustomerAssociate = {
+    query: gql`mutation checkoutCustomerAssociate($checkoutId: Uuid!, $customerAccessToken: String!) {
+      checkoutCustomerAssociate(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) {
+        checkoutId
+      }
+    }`,
+}

@@ -10,7 +10,6 @@ const compatibilityApps = [{
 
 const config = {
   apps: [
-    app("checkout"),
     app("anthropic"),
     app("resend"),
     app("konfidency"),
