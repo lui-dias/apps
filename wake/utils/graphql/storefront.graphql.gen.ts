@@ -424,6 +424,8 @@ export type BuyList = Node & {
   freeShipping?: Maybe<Scalars['Boolean']['output']>;
   /** The product gender. */
   gender?: Maybe<Scalars['String']['output']>;
+  /** The height of the product. */
+  height?: Maybe<Scalars['Float']['output']>;
   /** The node unique identifier. */
   id?: Maybe<Scalars['ID']['output']>;
   /** List of the product images. */
@@ -431,6 +433,8 @@ export type BuyList = Node & {
   /** List of the product insformations. */
   informations?: Maybe<Array<Maybe<Information>>>;
   kit: Scalars['Boolean']['output'];
+  /** The length of the product. */
+  length?: Maybe<Scalars['Float']['output']>;
   /** Check if its the main variant. */
   mainVariant?: Maybe<Scalars['Boolean']['output']>;
   /** The product maximum quantity for an order. */
@@ -498,6 +502,10 @@ export type BuyList = Node & {
   variantName?: Maybe<Scalars['String']['output']>;
   /** The available aggregated variant stock at the default distribution center. */
   variantStock?: Maybe<Scalars['Long']['output']>;
+  /** The weight of the product. */
+  weight?: Maybe<Scalars['Float']['output']>;
+  /** The width of the product. */
+  width?: Maybe<Scalars['Float']['output']>;
 };
 
 
@@ -990,6 +998,7 @@ export type CheckoutProductNode = {
 
 
 export type CheckoutProductNodeAttributeSelectionsArgs = {
+  includeParentIdVariants?: InputMaybe<Scalars['Boolean']['input']>;
   selected?: InputMaybe<Array<InputMaybe<AttributeFilterInput>>>;
 };
 
@@ -3155,12 +3164,16 @@ export type Product = Node & {
   freeShipping?: Maybe<Scalars['Boolean']['output']>;
   /** The product gender. */
   gender?: Maybe<Scalars['String']['output']>;
+  /** The height of the product. */
+  height?: Maybe<Scalars['Float']['output']>;
   /** The node unique identifier. */
   id?: Maybe<Scalars['ID']['output']>;
   /** List of the product images. */
   images?: Maybe<Array<Maybe<Image>>>;
   /** List of the product insformations. */
   informations?: Maybe<Array<Maybe<Information>>>;
+  /** The length of the product. */
+  length?: Maybe<Scalars['Float']['output']>;
   /** Check if its the main variant. */
   mainVariant?: Maybe<Scalars['Boolean']['output']>;
   /** The product maximum quantity for an order. */
@@ -3222,6 +3235,10 @@ export type Product = Node & {
   variantName?: Maybe<Scalars['String']['output']>;
   /** The available aggregated variant stock at the default distribution center. */
   variantStock?: Maybe<Scalars['Long']['output']>;
+  /** The weight of the product. */
+  weight?: Maybe<Scalars['Float']['output']>;
+  /** The width of the product. */
+  width?: Maybe<Scalars['Float']['output']>;
 };
 
 
@@ -4379,12 +4396,16 @@ export type SingleProduct = Node & {
   freeShipping?: Maybe<Scalars['Boolean']['output']>;
   /** The product gender. */
   gender?: Maybe<Scalars['String']['output']>;
+  /** The height of the product. */
+  height?: Maybe<Scalars['Float']['output']>;
   /** The node unique identifier. */
   id?: Maybe<Scalars['ID']['output']>;
   /** List of the product images. */
   images?: Maybe<Array<Maybe<Image>>>;
   /** List of the product insformations. */
   informations?: Maybe<Array<Maybe<Information>>>;
+  /** The length of the product. */
+  length?: Maybe<Scalars['Float']['output']>;
   /** Check if its the main variant. */
   mainVariant?: Maybe<Scalars['Boolean']['output']>;
   /** The product maximum quantity for an order. */
@@ -4452,11 +4473,16 @@ export type SingleProduct = Node & {
   variantName?: Maybe<Scalars['String']['output']>;
   /** The available aggregated variant stock at the default distribution center. */
   variantStock?: Maybe<Scalars['Long']['output']>;
+  /** The weight of the product. */
+  weight?: Maybe<Scalars['Float']['output']>;
+  /** The width of the product. */
+  width?: Maybe<Scalars['Float']['output']>;
 };
 
 
 /** A product represents an item for sale in the store. */
 export type SingleProductAttributeSelectionsArgs = {
+  includeParentIdVariants?: InputMaybe<Scalars['Boolean']['input']>;
   selected?: InputMaybe<Array<InputMaybe<AttributeFilterInput>>>;
 };
 
@@ -4929,6 +4955,13 @@ export type CustomerAuthenticatedLoginMutationVariables = Exact<{
 
 export type CustomerAuthenticatedLoginMutation = { customerAuthenticatedLogin?: { isMaster: boolean, token?: string | null, type?: LoginType | null, validUntil: any } | null };
 
+export type CustomerAccessTokenRenewMutationVariables = Exact<{
+  customerAccessToken: Scalars['String']['input'];
+}>;
+
+
+export type CustomerAccessTokenRenewMutation = { customerAccessTokenRenew?: { token?: string | null, validUntil: any } | null };
+
 export type CustomerAddressCreateMutationVariables = Exact<{
   customerAccessToken: Scalars['String']['input'];
   address: CreateCustomerAddressInput;
@@ -4975,3 +5008,17 @@ export type CheckoutCustomerAssociateMutationVariables = Exact<{
 
 
 export type CheckoutCustomerAssociateMutation = { checkoutCustomerAssociate?: { checkoutId: any } | null };
+
+export type PaymentMethodsQueryVariables = Exact<{
+  checkoutId: Scalars['Uuid']['input'];
+}>;
+
+
+export type PaymentMethodsQuery = { paymentMethods?: Array<{ id?: string | null, name?: string | null, imageUrl?: string | null } | null> | null };
+
+export type GetCheckoutCouponQueryVariables = Exact<{
+  checkoutId: Scalars['String']['input'];
+}>;
+
+
+export type GetCheckoutCouponQuery = { checkout?: { coupon?: string | null } | null };
