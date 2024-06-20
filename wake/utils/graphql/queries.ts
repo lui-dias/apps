@@ -21,6 +21,147 @@ fragment Checkout on Checkout {
     sku
     url
   }
+  selectedAddress {
+    addressNumber
+    cep
+    city
+    id
+    neighborhood
+    referencePoint
+    state
+    street
+  }
+  selectedShipping {
+    deadline
+    deadlineInHours
+    deliverySchedule {
+      date
+      endDateTime
+      endTime
+      startDateTime
+      startTime
+    }
+    name
+    shippingQuoteId
+    type
+    value
+  }
+  selectedPaymentMethod {
+    html
+    id
+    installments {
+      adjustment
+      number
+      total
+      value
+    }
+    paymentMethodId
+    scripts
+    selectedInstallment {
+      adjustment
+      number
+      total
+      value
+    }
+    suggestedCards {
+      brand
+      key
+      name
+      number
+    }
+  }
+  selectedShippingGroups {
+    distributionCenter {
+      id
+      sellerName
+    }
+    products {
+      productVariantId
+    }
+    selectedShipping {
+      deadline
+      deadlineInHours
+      deliverySchedule {
+        date
+        endDateTime
+        endTime
+        startDateTime
+        startTime
+      }
+      name
+      shippingQuoteId
+      type
+      value
+    }
+  }
+  orders {
+    adjustments {
+      name
+      type
+      value
+    }
+    date
+    delivery {
+      address {
+        address
+        cep
+        city
+        complement
+        isPickupStore
+        name
+        neighborhood
+        pickupStoreText
+      }
+      cost
+      deliveryTime
+      deliveryTimeInHours
+      name
+    }
+    discountValue
+    dispatchTimeText
+    interestValue
+    orderId
+    orderStatus
+    payment {
+      card {
+        brand
+        cardInterest
+        installments
+        name
+        number
+      }
+      invoice {
+        digitableLine
+        paymentLink
+      }
+      name
+      pix {
+        qrCode
+        qrCodeExpirationDate
+        qrCodeUrl
+      }
+    }
+    products {
+      adjustments {
+        additionalInformation
+        name
+        type
+        value
+      }
+      attributes {
+        name
+        value
+      }
+      imageUrl
+      name
+      productVariantId
+      quantity
+      unitValue
+      value
+    }
+    shippingValue
+    totalValue
+  }
 }
 `
 
@@ -530,6 +671,7 @@ const ShippingQuote = gql`
 export const Customer = gql`
   fragment Customer on Customer {
     id
+    cpf
     email
     gender
     customerId
@@ -563,8 +705,8 @@ export const GetProduct = {
 
 export const GetCart = {
     fragments: [Checkout],
-    query: gql`query GetCart($checkoutId: String!) { 
-    checkout(checkoutId: $checkoutId) { ...Checkout } 
+    query: gql`query GetCart($checkoutId: String!, $customerAccessToken: String) { 
+    checkout(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) { ...Checkout } 
   }`,
 }
 
@@ -1067,23 +1209,6 @@ export const CheckoutAddressAssociate = {
   }`,
 }
 
-export const GetSelectedAddress = {
-    query: gql`query GetSelectedAddress($checkoutId: String!, $customerAccessToken: String!) {
-    checkout(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) {
-      selectedAddress {
-        addressNumber
-        cep
-        city
-        id
-        neighborhood
-        referencePoint
-        state
-        street
-      }
-    }
-  }`,
-}
-
 export const CheckoutSelectShippingQuote = {
     query: gql`mutation checkoutSelectShippingQuote($checkoutId: Uuid!, $shippingQuoteId: Uuid!) {
     checkoutSelectShippingQuote(
@@ -1095,28 +1220,6 @@ export const CheckoutSelectShippingQuote = {
       shippingFee
       selectedShipping {
         deadline
-        name
-        shippingQuoteId
-        type
-        value
-      }
-    }
-  }`,
-}
-
-export const GetSelectedShipping = {
-    query: gql`query GetSelectedShipping($checkoutId: String!, $customerAccessToken: String!) {
-    checkout(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) {
-      selectedShipping {
-        deadline
-        deadlineInHours
-        deliverySchedule {
-          date
-          endDateTime
-          endTime
-          startDateTime
-          startTime
-        }
         name
         shippingQuoteId
         type

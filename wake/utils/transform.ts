@@ -1,4 +1,4 @@
-import {
+import type {
   BreadcrumbList,
   FilterRange,
   ListItem,
@@ -9,7 +9,7 @@ import {
   UnitPriceSpecification,
 } from "../../commerce/types.ts";
 import { DEFAULT_IMAGE } from "../../commerce/utils/constants.ts";
-import {
+import type {
   ProductFragment,
   SearchQuery,
   SingleProductFragment,

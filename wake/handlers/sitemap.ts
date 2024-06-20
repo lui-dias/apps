@@ -1,6 +1,6 @@
-import Proxy, { Header } from "../../website/handlers/proxy.ts";
-import { ConnInfo } from "std/http/server.ts";
-import { AppContext } from "../mod.ts";
+import Proxy, { type Header } from "../../website/handlers/proxy.ts";
+import type { ConnInfo } from "std/http/server.ts";
+import type { AppContext } from "../mod.ts";
 
 const BASE_SITEMAP_URL =
   "https://p-general-prod-public.s3.sa-east-1.amazonaws.com/Sitemap";
