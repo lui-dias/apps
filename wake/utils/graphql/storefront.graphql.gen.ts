@@ -380,6 +380,8 @@ export type BuyList = Node & {
   addToCartFromSpot?: Maybe<Scalars['Boolean']['output']>;
   /** The product url alias. */
   alias?: Maybe<Scalars['String']['output']>;
+  /** The complete product url alias. */
+  aliasComplete?: Maybe<Scalars['String']['output']>;
   /** Information about the possible selection attributes. */
   attributeSelections?: Maybe<AttributeSelection>;
   /** List of the product attributes. */
@@ -988,6 +990,8 @@ export type CheckoutProductNode = {
   installmentFee: Scalars['Boolean']['output'];
   /** The product installment value */
   installmentValue: Scalars['Decimal']['output'];
+  /** The product has a kit */
+  kit: Scalars['Boolean']['output'];
   /** The product list price */
   listPrice: Scalars['Decimal']['output'];
   /** The metadata related to this checkout. */
@@ -3172,6 +3176,8 @@ export type Product = Node & {
   addToCartFromSpot?: Maybe<Scalars['Boolean']['output']>;
   /** The product url alias. */
   alias?: Maybe<Scalars['String']['output']>;
+  /** The complete product url alias. */
+  aliasComplete?: Maybe<Scalars['String']['output']>;
   /** List of the product attributes. */
   attributes?: Maybe<Array<Maybe<ProductAttribute>>>;
   /** The product author. */
@@ -4392,6 +4398,8 @@ export type SingleProduct = Node & {
   addToCartFromSpot?: Maybe<Scalars['Boolean']['output']>;
   /** The product url alias. */
   alias?: Maybe<Scalars['String']['output']>;
+  /** The complete product url alias. */
+  aliasComplete?: Maybe<Scalars['String']['output']>;
   /** Information about the possible selection attributes. */
   attributeSelections?: Maybe<AttributeSelection>;
   /** List of the product attributes. */
@@ -5122,7 +5130,15 @@ export type CheckoutSelectInstallmentMutation = { checkoutSelectInstallment?: { 
 
 export type CheckoutCloneMutationVariables = Exact<{
   checkoutId: Scalars['Uuid']['input'];
+  copyUser?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
 export type CheckoutCloneMutation = { checkoutClone?: { checkoutId: any } | null };
+
+export type GetProductCustomizationsQueryVariables = Exact<{
+  productId: Scalars['Long']['input'];
+}>;
+
+
+export type GetProductCustomizationsQuery = { product?: { productName?: string | null, productId?: any | null, productVariantId?: any | null, customizations?: Array<{ customizationId: any, cost: any, name?: string | null, type?: string | null, values?: Array<string | null> | null, order: number, groupName?: string | null, maxLength: number, id?: string | null } | null> | null } | null };
