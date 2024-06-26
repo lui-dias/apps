@@ -2,166 +2,185 @@ import { gql } from "../../../utils/graphql.ts";
 
 const Checkout = gql`
 fragment Checkout on Checkout {
-  checkoutId
-  shippingFee
-  subtotal
-  total
-  completed
-  coupon
-  products {
-    imageUrl
-    brand
-    ajustedPrice
-    listPrice
-    price
-    name
-    productId
-    productVariantId
-    quantity
-    sku
-    url
-  }
-  selectedAddress {
-    addressNumber
-    cep
-    city
-    id
-    neighborhood
-    referencePoint
-    state
-    street
-  }
-  selectedShipping {
-    deadline
-    deadlineInHours
-    deliverySchedule {
-      date
-      endDateTime
-      endTime
-      startDateTime
-      startTime
-    }
-    name
-    shippingQuoteId
-    type
-    value
-  }
-  selectedPaymentMethod {
-    html
-    id
-    installments {
-      adjustment
-      number
-      total
-      value
-    }
-    paymentMethodId
-    scripts
-    selectedInstallment {
-      adjustment
-      number
-      total
-      value
-    }
-    suggestedCards {
-      brand
-      key
-      name
-      number
-    }
-  }
-  selectedShippingGroups {
-    distributionCenter {
-      id
-      sellerName
-    }
-    products {
-      productVariantId
-    }
-    selectedShipping {
-      deadline
-      deadlineInHours
-      deliverySchedule {
-        date
-        endDateTime
-        endTime
-        startDateTime
-        startTime
-      }
-      name
-      shippingQuoteId
-      type
-      value
-    }
-  }
-  orders {
-    adjustments {
-      name
-      type
-      value
-    }
-    date
-    delivery {
-      address {
-        address
-        cep
-        city
-        complement
-        isPickupStore
-        name
-        neighborhood
-        pickupStoreText
-      }
-      cost
-      deliveryTime
-      deliveryTimeInHours
-      name
-    }
-    discountValue
-    dispatchTimeText
-    interestValue
-    orderId
-    orderStatus
-    payment {
-      card {
-        brand
-        cardInterest
-        installments
-        name
-        number
-      }
-      invoice {
-        digitableLine
-        paymentLink
-      }
-      name
-      pix {
-        qrCode
-        qrCodeExpirationDate
-        qrCodeUrl
-      }
-    }
-    products {
-      adjustments {
-        additionalInformation
-        name
-        type
-        value
-      }
-      attributes {
-        name
-        value
-      }
-      imageUrl
-      name
-      productVariantId
-      quantity
-      unitValue
-      value
-    }
-    shippingValue
-    totalValue
-  }
+	checkoutId
+	shippingFee
+	subtotal
+	total
+	completed
+	coupon
+	products {
+		imageUrl
+		brand
+		ajustedPrice
+		listPrice
+		price
+		name
+		productId
+		productVariantId
+		quantity
+		sku
+		url
+		customization {
+			availableCustomizations {
+				cost
+				customizationId
+				groupName
+				id
+				maxLength
+				name
+				order
+				type
+				values
+			}
+			id
+			values {
+				cost
+				name
+				value
+			}
+		}
+	}
+	selectedAddress {
+		addressNumber
+		cep
+		city
+		id
+		neighborhood
+		referencePoint
+		state
+		street
+	}
+	selectedShipping {
+		deadline
+		deadlineInHours
+		deliverySchedule {
+			date
+			endDateTime
+			endTime
+			startDateTime
+			startTime
+		}
+		name
+		shippingQuoteId
+		type
+		value
+	}
+	selectedPaymentMethod {
+		html
+		id
+		installments {
+			adjustment
+			number
+			total
+			value
+		}
+		paymentMethodId
+		scripts
+		selectedInstallment {
+			adjustment
+			number
+			total
+			value
+		}
+		suggestedCards {
+			brand
+			key
+			name
+			number
+		}
+	}
+	selectedShippingGroups {
+		distributionCenter {
+			id
+			sellerName
+		}
+		products {
+			productVariantId
+		}
+		selectedShipping {
+			deadline
+			deadlineInHours
+			deliverySchedule {
+				date
+				endDateTime
+				endTime
+				startDateTime
+				startTime
+			}
+			name
+			shippingQuoteId
+			type
+			value
+		}
+	}
+	orders {
+		adjustments {
+			name
+			type
+			value
+		}
+		date
+		delivery {
+			address {
+				address
+				cep
+				city
+				complement
+				isPickupStore
+				name
+				neighborhood
+				pickupStoreText
+			}
+			cost
+			deliveryTime
+			deliveryTimeInHours
+			name
+		}
+		discountValue
+		dispatchTimeText
+		interestValue
+		orderId
+		orderStatus
+		payment {
+			card {
+				brand
+				cardInterest
+				installments
+				name
+				number
+			}
+			invoice {
+				digitableLine
+				paymentLink
+			}
+			name
+			pix {
+				qrCode
+				qrCodeExpirationDate
+				qrCodeUrl
+			}
+		}
+		products {
+			adjustments {
+				additionalInformation
+				name
+				type
+				value
+			}
+			attributes {
+				name
+				value
+			}
+			imageUrl
+			name
+			productVariantId
+			quantity
+			unitValue
+			value
+		}
+		shippingValue
+		totalValue
+	}
 }
 `;
 
