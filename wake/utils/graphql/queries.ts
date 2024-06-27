@@ -41,15 +41,16 @@ fragment Checkout on Checkout {
 		}
 	}
 	selectedAddress {
-		addressNumber
-		cep
-		city
-		id
-		neighborhood
-		referencePoint
-		state
-		street
-	}
+    addressNumber
+    cep
+    city
+    complement
+    id
+    neighborhood
+    referencePoint
+    state
+    street
+  }
 	selectedShipping {
 		deadline
 		deadlineInHours
@@ -87,30 +88,6 @@ fragment Checkout on Checkout {
 			key
 			name
 			number
-		}
-	}
-	selectedShippingGroups {
-		distributionCenter {
-			id
-			sellerName
-		}
-		products {
-			productVariantId
-		}
-		selectedShipping {
-			deadline
-			deadlineInHours
-			deliverySchedule {
-				date
-				endDateTime
-				endTime
-				startDateTime
-				startTime
-			}
-			name
-			shippingQuoteId
-			type
-			value
 		}
 	}
 	orders {
