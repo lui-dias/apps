@@ -1,4 +1,4 @@
-import { deleteCookie, setCookie } from "std/http/cookie.ts";
+import { deleteCookie } from "std/http/cookie.ts";
 import type { AppContext } from "../mod.ts";
 import authenticate from "../utils/authenticate.ts";
 import { CART_COOKIE, getCartCookie } from "../utils/cart.ts";
@@ -34,6 +34,8 @@ export default async function (props: Props, req: Request, ctx: AppContext) {
   );
 
   deleteCookie(ctx.response.headers, CART_COOKIE, { path: "/" });
+
+  return checkoutComplete;
 }
 
 interface Props {

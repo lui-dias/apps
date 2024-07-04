@@ -9,7 +9,7 @@ import type {
 import { parseHeaders } from "../utils/parseHeaders.ts";
 
 // https://wakecommerce.readme.io/docs/storefront-api-checkoutclone
-export default async function (props: object, req: Request, ctx: AppContext) {
+export default async function (_props: object, req: Request, ctx: AppContext) {
   const headers = parseHeaders(req.headers);
   const checkoutId = ensureCheckout(getCartCookie(req.headers));
 

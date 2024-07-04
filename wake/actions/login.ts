@@ -1,12 +1,6 @@
 import type { AppContext } from "../mod.ts";
-import { getCartCookie } from "../utils/cart.ts";
-import {
-  CheckoutCustomerAssociate,
-  CustomerAuthenticatedLogin,
-} from "../utils/graphql/queries.ts";
+import { CustomerAuthenticatedLogin } from "../utils/graphql/queries.ts";
 import type {
-  CheckoutCustomerAssociateMutation,
-  CheckoutCustomerAssociateMutationVariables,
   CustomerAuthenticatedLoginMutation,
   CustomerAuthenticatedLoginMutationVariables,
 } from "../utils/graphql/storefront.graphql.gen.ts";
@@ -16,7 +10,7 @@ import { setUserCookie } from "../utils/user.ts";
 export default async function (
   props: Props,
   req: Request,
-  { storefront, response, invoke }: AppContext,
+  { storefront, response }: AppContext,
 ): Promise<CustomerAuthenticatedLoginMutation["customerAuthenticatedLogin"]> {
   const headers = parseHeaders(req.headers);
 
