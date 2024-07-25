@@ -8,6 +8,9 @@ fragment Checkout on Checkout {
 	total
 	completed
 	coupon
+  customer {
+    customerId
+  }
 	products {
 		imageUrl
 		brand

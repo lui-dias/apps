@@ -693,6 +693,8 @@ export type CheckoutAddress = {
   id?: Maybe<Scalars["ID"]["output"]>;
   /** The neighborhood of the address. */
   neighborhood?: Maybe<Scalars["String"]["output"]>;
+  /** Receiver's name */
+  receiverName?: Maybe<Scalars["String"]["output"]>;
   /** The reference point for the address. */
   referencePoint?: Maybe<Scalars["String"]["output"]>;
   /** The state of the address. */
@@ -3406,6 +3408,8 @@ export type ProductExplicitFiltersInput = {
   productVariantId?: InputMaybe<Array<Scalars["Long"]["input"]>>;
   /** A product ID or a list of IDs to search for other products with the same parent ID. */
   sameParentAs?: InputMaybe<Array<Scalars["Long"]["input"]>>;
+  /** Search products. */
+  search?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** The set of SKUs which the result item SKU must be included. */
   sku?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Show products with a quantity of available products in stock greater than or equal to the given number. */
@@ -3658,12 +3662,12 @@ export type QueryRoot = {
   productRecommendations?: Maybe<Array<Maybe<Product>>>;
   /** Retrieve a list of products by specific filters. */
   products?: Maybe<ProductsConnection>;
-  /** List of resellers */
-  resellers?: Maybe<ResellersConnection>;
   /** Retrieve a list of scripts. */
   scripts?: Maybe<Array<Maybe<Script>>>;
   /** Search products with cursor pagination. */
   search?: Maybe<Search>;
+  /** List of sellers */
+  sellers?: Maybe<SellersConnection>;
   /** Get the shipping quote groups by providing CEP and checkout or products. */
   shippingQuoteGroups?: Maybe<Array<Maybe<ShippingQuoteGroup>>>;
   /** Get the shipping quotes by providing CEP and checkout or product identifier. */
@@ -3725,6 +3729,7 @@ export type QueryRootCategoriesArgs = {
   categoryIds?: InputMaybe<Array<Scalars["Long"]["input"]>>;
   first?: InputMaybe<Scalars["Int"]["input"]>;
   last?: InputMaybe<Scalars["Int"]["input"]>;
+  onlyRoot?: Scalars["Boolean"]["input"];
   sortDirection?: SortDirection;
   sortKey?: CategorySortKeys;
   urls?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
@@ -3853,16 +3858,6 @@ export type QueryRootProductsArgs = {
   sortKey?: ProductSortKeys;
 };
 
-export type QueryRootResellersArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
-  resellerName?: InputMaybe<Scalars["String"]["input"]>;
-  sortDirection?: SortDirection;
-  sortKey?: ResellerSortKeys;
-};
-
 export type QueryRootScriptsArgs = {
   name?: InputMaybe<Scalars["String"]["input"]>;
   pageType?: InputMaybe<Array<ScriptPageType>>;
@@ -3875,6 +3870,16 @@ export type QueryRootSearchArgs = {
   operation?: Operation;
   partnerAccessToken?: InputMaybe<Scalars["String"]["input"]>;
   query?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type QueryRootSellersArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
+  sellerName?: InputMaybe<Scalars["String"]["input"]>;
+  sortDirection?: SortDirection;
+  sortKey?: ResellerSortKeys;
 };
 
 export type QueryRootShippingQuoteGroupsArgs = {
@@ -3920,10 +3925,12 @@ export type RemoveSubscriptionProductInput = {
 export type ResellerNode = {
   /** Taxpayer identification number for businesses */
   cnpj?: Maybe<Scalars["String"]["output"]>;
-  /** The reseller's name */
+  /** The registered name of the company */
+  corporateName?: Maybe<Scalars["String"]["output"]>;
+  /** The seller's name */
   name?: Maybe<Scalars["String"]["output"]>;
-  /** Reseller unique identifier */
-  resellerId: Scalars["Long"]["output"];
+  /** Seller unique identifier */
+  sellerId: Scalars["Long"]["output"];
 };
 
 /** Define the reseller attribute which the result set will be sorted on. */
@@ -3932,25 +3939,6 @@ export type ResellerSortKeys =
   | "ID"
   /** The reseller's name */
   | "NAME";
-
-/** A connection to a list of items. */
-export type ResellersConnection = {
-  /** A list of edges. */
-  edges?: Maybe<Array<ResellersEdge>>;
-  /** A flattened list of the nodes. */
-  nodes?: Maybe<Array<Maybe<ResellerNode>>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  totalCount: Scalars["Int"]["output"];
-};
-
-/** An edge in a connection. */
-export type ResellersEdge = {
-  /** A cursor for use in pagination. */
-  cursor: Scalars["String"]["output"];
-  /** The item at the end of the edge. */
-  node?: Maybe<ResellerNode>;
-};
 
 /** Back in stock registration input parameters. */
 export type RestockAlertInput = {
@@ -4212,6 +4200,25 @@ export type SellerPrices = {
   listPrice?: Maybe<Scalars["Decimal"]["output"]>;
   /** The current working price. */
   price?: Maybe<Scalars["Decimal"]["output"]>;
+};
+
+/** A connection to a list of items. */
+export type SellersConnection = {
+  /** A list of edges. */
+  edges?: Maybe<Array<SellersEdge>>;
+  /** A flattened list of the nodes. */
+  nodes?: Maybe<Array<Maybe<ResellerNode>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  totalCount: Scalars["Int"]["output"];
+};
+
+/** An edge in a connection. */
+export type SellersEdge = {
+  /** A cursor for use in pagination. */
+  cursor: Scalars["String"]["output"];
+  /** The item at the end of the edge. */
+  node?: Maybe<ResellerNode>;
 };
 
 export type ShippingNode = {
@@ -4791,6 +4798,7 @@ export type CheckoutFragment = {
   total: any;
   completed: boolean;
   coupon?: string | null;
+  customer?: { customerId: any } | null;
   products?:
     | Array<
       {
@@ -6692,6 +6700,7 @@ export type GetCartQuery = {
     total: any;
     completed: boolean;
     coupon?: string | null;
+    customer?: { customerId: any } | null;
     products?:
       | Array<
         {
@@ -6881,6 +6890,7 @@ export type CreateCartMutation = {
     total: any;
     completed: boolean;
     coupon?: string | null;
+    customer?: { customerId: any } | null;
     products?:
       | Array<
         {
@@ -7410,6 +7420,7 @@ export type AddCouponMutation = {
     total: any;
     completed: boolean;
     coupon?: string | null;
+    customer?: { customerId: any } | null;
     products?:
       | Array<
         {
@@ -7601,6 +7612,7 @@ export type AddItemToCartMutation = {
     total: any;
     completed: boolean;
     coupon?: string | null;
+    customer?: { customerId: any } | null;
     products?:
       | Array<
         {
@@ -7792,6 +7804,7 @@ export type RemoveCouponMutation = {
     total: any;
     completed: boolean;
     coupon?: string | null;
+    customer?: { customerId: any } | null;
     products?:
       | Array<
         {
@@ -7983,6 +7996,7 @@ export type RemoveItemFromCartMutation = {
     total: any;
     completed: boolean;
     coupon?: string | null;
+    customer?: { customerId: any } | null;
     products?:
       | Array<
         {
@@ -9609,6 +9623,7 @@ export type CheckoutSelectInstallmentMutation = {
     total: any;
     completed: boolean;
     coupon?: string | null;
+    customer?: { customerId: any } | null;
     products?:
       | Array<
         {
