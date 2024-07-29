@@ -1,7 +1,7 @@
-import { deleteCookie } from "std/http/cookie.ts";
 import type { AppContext } from "../mod.ts";
 import authenticate from "../utils/authenticate.ts";
-import { CART_COOKIE, getCartCookie } from "../utils/cart.ts";
+import { getCartCookie } from "../utils/cart.ts";
+import ensureCheckout from "../utils/ensureCheckout.ts";
 import ensureCustomerToken from "../utils/ensureCustomerToken.ts";
 import { CheckoutComplete } from "../utils/graphql/queries.ts";
 import type {
@@ -9,7 +9,6 @@ import type {
   CheckoutCompleteMutationVariables,
 } from "../utils/graphql/storefront.graphql.gen.ts";
 import { parseHeaders } from "../utils/parseHeaders.ts";
-import ensureCheckout from "../utils/ensureCheckout.ts";
 
 // https://wakecommerce.readme.io/docs/checkoutcomplete
 export default async function (props: Props, req: Request, ctx: AppContext) {
@@ -32,8 +31,6 @@ export default async function (props: Props, req: Request, ctx: AppContext) {
     },
     { headers },
   );
-
-  deleteCookie(ctx.response.headers, CART_COOKIE, { path: "/" });
 
   return checkoutComplete;
 }
