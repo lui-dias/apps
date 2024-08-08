@@ -142,13 +142,6 @@ const productListLoader = async (
   const url = new URL(req.url);
   const { storefront } = ctx;
 
-  console.log(props.filters)
-  console.log(props.filters)
-  console.log(props.filters)
-  console.log(props.filters)
-  console.log(props.filters)
-  console.log(props.filters)
-
   const headers = parseHeaders(req.headers);
 
   const data = await storefront.query<
